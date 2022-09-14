@@ -35,7 +35,10 @@ const UserInfo = () => {
           <br/>
           <br/>
           <Link href={Routes.TradesPage()}>
-            <button className={"btn btn-primary"}>Market</button>
+            <button className={"btn btn-primary me-3"}>Market</button>
+          </Link>
+          <Link href={Routes.SpotPage()}>
+            <button className={"btn btn-primary me-3"}>Spot</button>
           </Link>
         </div>
       </>

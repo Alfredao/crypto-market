@@ -34,7 +34,6 @@ const TradesPage = () => {
   }
 
   const sellBTC = async function () {
-
     if (!quantity) {
       alert('You must inform a quantity to buy')
     }
@@ -78,7 +77,6 @@ const TradesPage = () => {
       </>
     )
   }
-
 
   return (
     <Layout title={"Market"}>
