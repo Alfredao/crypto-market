@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -20,6 +20,7 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("USER")
+  balance        Float    @default(0.0)
 
   tokens   Token[]
   sessions Session[]
@@ -63,3 +64,16 @@ model Token {
 // enum TokenType {
 //   RESET_PASSWORD
 // }
+
+enum OrderType {
+  BUY
+  SELL
+}
+
+model Order {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  type      OrderType
+  orderId   String
+}
