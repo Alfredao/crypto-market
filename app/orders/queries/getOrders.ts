@@ -1,16 +1,16 @@
-import { paginate } from "blitz";
-import { resolver } from "@blitzjs/rpc";
-import db, { Prisma } from "db";
+import {paginate} from "blitz";
+import {resolver} from "@blitzjs/rpc";
+import db, {Prisma} from "db";
 
 interface GetOrdersInput
-  extends Pick<
-    Prisma.OrderFindManyArgs,
-    "where" | "orderBy" | "skip" | "take"
-  > {}
+  extends Pick<Prisma.OrderFindManyArgs,
+    "where" | "orderBy" | "skip" | "take"> {
+}
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ where, orderBy, skip = 0, take = 100 }: GetOrdersInput) => {
+  async ({where, orderBy, skip = 0, take = 100}: GetOrdersInput) => {
+    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
     const {
       items: orders,
       hasMore,
@@ -19,9 +19,9 @@ export default resolver.pipe(
     } = await paginate({
       skip,
       take,
-      count: () => db.order.count({ where }),
+      count: () => db.order.count({where}),
       query: (paginateArgs) =>
-        db.order.findMany({ ...paginateArgs, where, orderBy }),
+        db.order.findMany({...paginateArgs, where, orderBy}),
     });
 
     return {

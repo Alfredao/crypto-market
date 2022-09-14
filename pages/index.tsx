@@ -12,60 +12,67 @@ import {BlitzPage, Routes} from "@blitzjs/next"
  */
 
 const UserInfo = () => {
-    const currentUser = useCurrentUser()
-    const [logoutMutation] = useMutation(logout)
+  const currentUser = useCurrentUser()
+  const [logoutMutation] = useMutation(logout)
 
-    if (currentUser) {
-        return (
-            <>
-                <button
-                    className="btn btn-primary"
-                    onClick={async () => {
-                        await logoutMutation()
-                    }}
-                >
-                    Logout
-                </button>
-                <div className={"mt-2"}>
-                    User id: <code>{currentUser.id}</code>
-                    <br/>
-                    User role: <code>{currentUser.role}</code>
-                </div>
-            </>
-        )
-    } else {
-        return (
-            <>
-                <Link href={Routes.SignupPage()}>
-                    <a className="btn btn-primary me-3">
-                        <strong>Sign Up</strong>
-                    </a>
-                </Link>
+  if (currentUser) {
+    return (
+      <>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={async () => {
+            await logoutMutation()
+          }}
+        >
+          Logout
+        </button>
+        <div className={"mt-2"}>
+          User id: <code>{currentUser.id}</code>
+          <br/>
+          User e-mail: <code>{currentUser.email}</code>
+          <br/>
+          User role: <code>{currentUser.role}</code>
+          <br/>
+          <br/>
+          <Link href={Routes.TradesPage()}>
+            <button className={"btn btn-primary"}>Market</button>
+          </Link>
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <Link href={Routes.SignupPage()}>
+          <a className="btn btn-primary me-3">
+            <strong>Sign Up</strong>
+          </a>
+        </Link>
 
-                <Link href={Routes.LoginPage()}>
-                    <a className="btn btn-primary me-3">
-                        <strong>Login</strong>
-                    </a>
-                </Link>
-            </>
-        )
-    }
+        <Link href={Routes.LoginPage()}>
+          <a className="btn btn-primary me-3">
+            <strong>Login</strong>
+          </a>
+        </Link>
+      </>
+    )
+  }
 }
 
 const Home: BlitzPage = () => {
-    return (
-        <Layout title="Home">
-            <div className="container">
-                <main>
-                    <div className="buttons" style={{marginTop: "1rem", marginBottom: "1rem"}}>
-                        <Suspense fallback="Loading...">
-                            <UserInfo/>
-                        </Suspense>
-                    </div>
-                </main>
-            </div>
-        </Layout>
-    )
+  return (
+    <Layout title="Home">
+      <div className="container">
+        <main>
+          <div className="buttons" style={{marginTop: "1rem", marginBottom: "1rem"}}>
+            <Suspense fallback="Loading...">
+              <UserInfo/>
+            </Suspense>
+          </div>
+        </main>
+      </div>
+    </Layout>
+  )
 }
 
 export default Home
